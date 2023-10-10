@@ -1,0 +1,37 @@
+---
+import type { IModule } from "../utils/types/ClientInfo";
+import Layout from "../layouts/Layout.astro";
+import ClientInfo from "../../public/client-info.json";
+import Tab from "../components/ClickGUI/Tab.astro";
+---
+
+<Layout title="Raven B4 - Click GUI Demo">
+	<main id="clickgui">
+		{
+			ClientInfo.categories.map(tabName => {
+				const modules = new Map();
+				for (const modName in ClientInfo.modules) {
+					const mod = ClientInfo.modules[modName as "Killaura"];
+					if (mod.category !== tabName) continue;
+					modules.set(modName, mod as IModule);
+				}
+				return <Tab name={tabName} modules={modules} />;
+			})
+		}
+	</main>
+</Layout>
+
+<style>
+	#clickgui {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+		align-items: flex-start;
+	}
+</style>

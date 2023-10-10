@@ -1,0 +1,92 @@
+{
+	"required": ["categories", "modules", "supported games"],
+	"properties": {
+		"supported games": {
+			"title": "Supported Games",
+			"description": "Any game with its name listed here is supported.",
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"categories": {
+			"title": "Categories",
+			"description": "The categories property lists all categories found in the Click GUI. (e.x. combat)",
+			"type": "array",
+			"uniqueItems": true,
+			"items": {
+				"type": "string"
+			},
+			"examples": [["combat", "blatant", "render", "utility", "client"]]
+		},
+		"modules": {
+			"title": "Modules",
+			"description": "Contains a list of modules.",
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"title": "Module",
+				"description": "Describes a module for the Click GUI to render.",
+				"properties": {
+					"category": {
+						"type": "string",
+						"title": "Category",
+						"description": "The category that this module is parented under."
+					},
+					"description": {
+						"type": "string",
+						"title": "Description",
+						"description": "Describes the module."
+					},
+					"settings": {
+						"type": "array",
+						"items": {
+							"required": ["type", "name"],
+							"properties": {
+								"name": {
+									"title": "Name",
+									"description": "Describes the name of this setting.",
+									"type": "string"
+								},
+								"type": {
+									"type": "string",
+									"title": "Type",
+									"description": "Describes the type of this setting",
+									"enum": ["toggle", "number-slider"]
+								},
+								"min": {
+									"title": "Min (only for number sliders)",
+									"type": "number",
+									"description": "Describes the minimum number that the value must be greater than or equal to."
+								},
+								"max": {
+									"title": "Max (only for number sliders)",
+									"type": "number",
+									"description": "Describes the maximum number that the value must be less than or equal to."
+								},
+								"default": {
+									"title": "Default",
+									"description": "Describes the default value that the slider will have if not set by the user.",
+									"type": ["boolean", "number"],
+									"examples": [true, 1]
+								}
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"mod1": {
+						"description": "does something",
+						"category": "misc"
+					},
+					"mod2": {
+						"description": "does something",
+						"category": "misc"
+					}
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,42 @@
+---
+import type { AnySetting } from "../../../utils/types/ClientInfo";
+
+interface Props {
+	name: string;
+	state?: boolean;
+}
+
+const { name, state } = Astro.props;
+---
+
+<div class="setting toggle" data-toggled="false" data-name={name}>
+	<!-- we'll change the color based on if it's toggled or not. -->
+	<span class="toggle-text">[{state ? "+" : "-"}] {name}</span>
+</div>
+<style>
+	.toggle[data-toggled="true"] > .toggle-text {
+		color: green;
+	}
+	.toggle[data-toggled="false"] > .toggle-text {
+		color: white;
+	}
+</style>
+<script>
+	const toggles = document.querySelectorAll(
+		".toggle"
+	) as NodeListOf<HTMLDivElement>;
+
+	toggles.forEach(toggle => {
+		toggle.addEventListener("click", () => {
+			const currentState = JSON.parse(toggle.dataset.toggled!);
+			const newState = !currentState;
+			const toggleText = toggle.querySelector(
+				".toggle-text"
+			)! as HTMLSpanElement;
+			toggleText.textContent = `[${newState ? "+" : "-"}] ${
+				toggle.dataset.name
+			}`;
+			toggle.dataset.toggled = JSON.stringify(newState);
+		});
+	});
+</script>

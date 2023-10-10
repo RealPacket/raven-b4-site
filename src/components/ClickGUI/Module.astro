@@ -1,0 +1,90 @@
+---
+import type { AnySetting } from "../../utils/types/ClientInfo";
+import Slider from "./Settings/Slider.astro";
+import Toggle from "./Settings/Toggle.astro";
+
+interface Props {
+	name: string;
+	description?: string;
+	settings?: AnySetting[];
+}
+
+const { name, description, settings } = Astro.props;
+const moduleId = `${name}-module`;
+---
+
+<div id={moduleId} class="module" data-expanded="false" data-toggled="false">
+	<div class="module-header">
+		<span class="module-title">{name}</span>
+	</div>
+	<div class="module-contents">
+		{
+			settings?.map(setting => {
+				switch (setting.type) {
+					case "toggle":
+						return <Toggle name={setting.name} state={setting.default} />;
+						break;
+					case "number-slider":
+						return (
+							<Slider
+								name={setting.name}
+								min={setting.min}
+								max={setting.max}
+								defaultVal={setting.default}
+							/>
+						);
+						break;
+					default:
+						break;
+				}
+			})
+		}
+	</div>
+</div>
+<script>
+	const modules = document.querySelectorAll(
+		"div.module"
+	) as NodeListOf<HTMLDivElement>;
+	modules.forEach(module => {
+		const header = module.querySelector(".module-header")! as HTMLDivElement;
+		header.addEventListener("mouseup", ev => {
+			switch (ev.button) {
+				case 0: // left click
+					module.dataset.toggled = JSON.stringify(
+						!JSON.parse(module.dataset.toggled!)
+					);
+					console.log("left click");
+					break;
+				case 2: // right click
+					module.dataset.expanded = JSON.stringify(
+						!JSON.parse(module.dataset.expanded!)
+					);
+					console.log("right click");
+					break;
+				default:
+					break;
+			}
+		});
+		module
+			.querySelector(".module-header")!
+			.addEventListener("contextmenu", e => {
+				e.preventDefault(); // don't show the context menu for modules.
+			});
+	});
+</script>
+<style>
+	.module-header {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.module[data-toggled="true"] > .module-header > .module-title {
+		color: rgb(0, 110, 255);
+	}
+	.module[data-expanded="false"] > .module-contents {
+		display: none;
+	}
+	.module-title {
+		color: rgb(255, 255, 255);
+	}
+</style>

@@ -1,0 +1,20 @@
+{
+	"type": "object",
+	"properties": {
+		"$schema": {}
+	},
+	"additionalProperties": {
+		"type": "object",
+		"properties": {
+			"Value": {
+				"title": "Value",
+				"description": "Describes the state of the config.",
+				"type": "boolean"
+			}
+		},
+		"additionalProperties": {
+			"type": ["number", "boolean"],
+			"description": "Some other additional setting."
+		}
+	}
+}

@@ -1,0 +1,367 @@
+{
+	"$schema": "client-info.schema.json",
+	"categories": ["combat", "blatant", "render", "utility", "client"],
+	"supported games": ["easy.gg bedwars"],
+	"modules": {
+		"Killaura": {
+			"category": "combat",
+			"description": "Hits players around you!",
+			"settings": [
+				{
+					"name": "Range",
+					"type": "number-slider",
+					"min": 0,
+					"max": 20,
+					"default": 20
+				},
+				{
+					"name": "CustomAnimations",
+					"type": "toggle"
+				},
+				{
+					"name": "Toolcheck",
+					"type": "toggle"
+				},
+				{
+					"name": "Locked View",
+					"type": "toggle"
+				}
+			]
+		},
+		"AutoClicker": {
+			"category": "combat",
+			"description": "Makes you click faster.",
+			"settings": [
+				{
+					"name": "CPS",
+					"type": "number-slider",
+					"min": 1,
+					"max": 20,
+					"default": 20
+				},
+				{
+					"name": "Blocks",
+					"type": "toggle"
+				}
+			]
+		},
+		"Reach": {
+			"category": "combat",
+			"description": "Gives you long arms.",
+			"settings": [
+				{
+					"name": "Range",
+					"type": "number-slider",
+					"min": 0,
+					"max": 18,
+					"default": 18
+				}
+			]
+		},
+		"AutoSprint": {
+			"category": "combat"
+		},
+		"Velocity": {
+			"description": "Gives you long arms",
+			"settings": [
+				{
+					"name": "Horizontal",
+					"type": "number-slider",
+					"min": 0,
+					"max": 100,
+					"default": 0
+				},
+				{
+					"name": "Vertical",
+					"type": "number-slider",
+					"min": 0,
+					"max": 100,
+					"default": 0
+				}
+			]
+		},
+
+		"AutoQueue": {
+			"category": "blatant"
+		},
+		"AutoBank": {
+			"category": "blatant"
+		},
+		"AutoForge": {
+			"category": "blatant",
+			"description": "Automatically forges for you",
+			"settings": [
+				{
+					"name": "Sword",
+					"type": "toggle"
+				},
+				{
+					"name": "Dagger",
+					"type": "toggle"
+				},
+				{
+					"name": "Scythe",
+					"type": "toggle"
+				},
+				{
+					"name": "Hammer",
+					"type": "toggle"
+				},
+				{
+					"name": "Bow",
+					"type": "toggle"
+				},
+				{
+					"name": "Armor",
+					"type": "toggle"
+				}
+			]
+		},
+		"Fly": {
+			"description": "Makes you a raven :)",
+			"category": "blatant",
+			"settings": [
+				{
+					"name": "Up",
+					"type": "number-slider",
+					"default": 50,
+					"min": 0,
+					"max": 100
+				},
+				{
+					"name": "Down",
+					"type": "number-slider",
+					"default": 50,
+					"min": 0,
+					"max": 100
+				}
+			]
+		},
+		"Inf Fly": {
+			"description": "Makes you a better raven :)",
+			"category": "blatant",
+			"settings": [
+				{
+					"name": "Up",
+					"type": "number-slider",
+					"default": 50,
+					"min": 0,
+					"max": 100
+				},
+				{
+					"name": "Down",
+					"type": "number-slider",
+					"default": 50,
+					"min": 0,
+					"max": 100
+				}
+			]
+		},
+		"High Jump": {
+			"category": "blatant",
+			"description": "Makes you Lebron James",
+			"settings": [
+				{
+					"name": "JumpHeight",
+					"type": "number-slider",
+					"default": 100,
+					"min": 0,
+					"max": 500
+				}
+			]
+		},
+		"INF Jump": {
+			"category": "blatant"
+		},
+		"LongJump": {
+			"category": "blatant"
+		},
+		"NoFall": {
+			"category": "blatant"
+		},
+		"Speed": {
+			"category": "blatant",
+			"description": "Makes you go zoooom",
+			"settings": [
+				{
+					"type": "number-slider",
+					"name": "Value",
+					"min": 0,
+					"max": 23,
+					"default": 23
+				}
+			]
+		},
+		"Spider": {
+			"category": "blatant",
+
+			"description": "Builds a bridge for you",
+			"settings": [
+				{
+					"type": "number-slider",
+					"name": "Speed",
+					"min": 0,
+					"default": 100,
+					"max": 150
+				}
+			]
+		},
+
+		"Galaxy Sky": {
+			"category": "render"
+		},
+		"Atmosphere": {
+			"category": "render"
+		},
+		"FOV": {
+			"category": "render",
+			"description": "Makes you see the end of time",
+			"settings": [
+				{
+					"type": "number-slider",
+					"name": "FOV",
+					"min": 0,
+					"max": 120
+				}
+			]
+		},
+		"ViewModelChanger": {
+			"category": "render",
+			"description": "Change the Sword Position!",
+			"settings": [
+				{
+					"type": "number-slider",
+					"name": "Forward",
+					"min": 0,
+					"max": 50
+				},
+				{
+					"type": "number-slider",
+					"name": "Side",
+					"min": 0,
+					"max": 50,
+					"default": 6
+				},
+				{
+					"type": "number-slider",
+					"name": "Up",
+					"min": 0,
+					"max": 50,
+					"default": 6
+				}
+			]
+		},
+		"FPS Unlocker": {
+			"category": "render"
+		},
+
+		"AntiVoid": {
+			"category": "utility",
+			"description": "Makes the void useless!",
+			"settings": [
+				{
+					"type": "number-slider",
+					"name": "Height",
+					"min": 50,
+					"max": 250
+				},
+				{
+					"type": "number-slider",
+					"name": "Color",
+					"min": 0,
+					"default": 50,
+					"max": 100
+				},
+				{
+					"type": "number-slider",
+					"name": "Transparency",
+					"min": 0,
+					"default": 50,
+					"max": 100
+				}
+			]
+		},
+		"BedTP": {
+			"category": "utility"
+		},
+		"Scythe Disabler": {
+			"category": "utility"
+		},
+		"Invis": {
+			"category": "utility"
+		},
+		"Bed Nuker": {
+			"category": "utility",
+			"description": "Killaura but for beds",
+			"settings": [
+				{
+					"type": "number-slider",
+					"name": "Range",
+					"min": 0,
+					"default": 16,
+					"max": 30
+				}
+			]
+		},
+		"Chest Stealer": {
+			"category": "utility",
+			"description": "Steals the contents from chests around you in SkyWars.",
+			"settings": [
+				{
+					"name": "Seconds",
+					"type": "number-slider",
+
+					"default": 1,
+					"min": 0,
+					"max": 1
+				}
+			]
+		},
+		"AutoKit": {
+			"category": "utility"
+		},
+		"Scaffold": {
+			"category": "utility",
+			"description": "Builds a bridge for you!",
+			"settings": [
+				{
+					"name": "Build Animation",
+					"type": "toggle",
+					"default": false
+				}
+			]
+		},
+		"Lagback Replacer": {
+			"category": "utility",
+			"description": "lagback? nah"
+		},
+		"NameHider": {
+			"category": "utility"
+		},
+
+		"Arraylist": {
+			"category": "client",
+			"description": "Nice ArrayList for Raven B4",
+			"settings": [
+				{
+					"name": "Raven B4 Logo",
+					"type": "toggle",
+					"default": false
+				}
+			]
+		},
+		"Target Hud": {
+			"category": "client",
+			"description": "Shows information about the target.",
+			"settings": [
+				{
+					"name": "Range",
+					"type": "number-slider",
+					"min": 0,
+					"max": 20,
+					"default": 10
+				}
+			]
+		}
+	}
+}

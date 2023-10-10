@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Raven from "/Raven.webp";
+---
+
+<Layout title="Raven B4 - Features">
+	<main>
+		<a class="container" href="/">
+			<!-- logo -->
+			<img alt="Raven B4 logo" src={Raven} title="Raven B4 logo"/>
+        </a>
+		<a class="container" href="/">
+			<!-- raven b4 gradient text -->
+			<span class="text-gradient main-text">Raven B4</span>
+        </a>
+		<ul role="list" class="features-card-grid">
+			<Card
+				title="Premium quality"
+				body="The best of its class, Raven B4 is the standard at which all others are measured."
+			/>
+			<Card
+				title="Frequent updates"
+				body="Ever since its conception, Raven B4 has had constant updates providing you with the newest features and bug-fixes."
+			/>
+			<Card
+				title="Trust"
+				body="We’ve been your leading blatant (and ghost) client provider since 2023."
+			/>
+			<Card
+				title="Top notch support"
+				body="What ever the issue may be, we’re here to help you solve the issue."
+			/>
+		</ul>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.main-text {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.features-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+
+	.container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.container .image-container,
+	.container .text-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.container img {
+		max-width: 100%;
+	}
+
+	.container p {
+		text-align: center;
+	}
+</style>

@@ -1,0 +1,125 @@
+---
+import type { AnySetting } from "../../../utils/types/ClientInfo";
+
+interface Props {
+	name: string;
+	min: number;
+	defaultVal?: number;
+	max: number;
+}
+
+const { name, min, defaultVal, max } = Astro.props;
+let value = defaultVal ?? min;
+// round it down if it's more than max.
+value = value > max ? value - max : value;
+// round it up if it's less than min.
+value = value < min ? min : value;
+---
+
+<div
+	class="setting slider"
+	id={`slider-setting-${name}`}
+	data-toggled="false"
+	data-name={name}
+	data-value={defaultVal}
+>
+	<div class="slider-info-holder">
+		<span class="setting-title">{name}</span>
+		<span class="slider-value">{value}</span>
+	</div>
+	<input
+		type="range"
+		class="display-slider"
+		min={min}
+		max={max}
+		step=""
+		value={value}
+		disabled
+	/>
+	<input
+		type="range"
+		class="input-slider"
+		min={min}
+		max={max}
+		step=""
+		value={value}
+	/>
+</div>
+<script>
+	function rainbow(delay: number): string {
+		const rainbowState = Math.ceil((Date.now() + delay) / 20.0) % 360;
+		const hue = rainbowState / 360.0;
+		return `hsl(${hue * 360}, 100%, 50%)`;
+	}
+	const sliders = document.querySelectorAll(".slider");
+	for (const slider of sliders) {
+		const inputSlider = slider.querySelector(
+			".input-slider"
+		)! as HTMLInputElement;
+		const displaySlider = slider.querySelector(
+			".display-slider"
+		)! as HTMLInputElement;
+		inputSlider.addEventListener("input", e => {
+			slider.querySelector(".slider-info-holder > .slider-value")!.textContent =
+				(e.target! as HTMLInputElement).value;
+		});
+		setInterval(() => {
+			displaySlider.style.background = rainbow(2);
+		}, 2);
+	}
+</script>
+<style>
+	.slider-info-holder > span {
+		color: white;
+	}
+	.slider-info-holder > .slider-value {
+		float: right;
+	}
+
+	.input-slider {
+		margin: auto;
+		appearance: none;
+		-webkit-appearance: none;
+		overflow: hidden;
+		border-radius: 0;
+		outline: none;
+		width: 188px;
+		height: 20px;
+		position: absolute;
+	}
+
+	.input-slider::-moz-range-thumb {
+		opacity: 0;
+	}
+
+	.display-slider::-webkit-slider-runnable-track {
+	}
+
+	.display-slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		width: 0;
+		height: 20px;
+		background: var(--clickgui-accent-color);
+		box-shadow: -100vw 0 0 100vw var(--clickgui-accent-color);
+	}
+
+	.display-slider {
+		margin: auto;
+		-webkit-appearance: none;
+		position: relative;
+		overflow: hidden;
+		height: 100%;
+		width: 100%;
+		border-radius: 0;
+		outline: none;
+	}
+
+	.display-slider::-webkit-slider-runnable-track {
+	}
+	.display-slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		width: 0;
+		height: 20px;
+		box-shadow: -100vw 0 0 100vw;
+	}
+</style>

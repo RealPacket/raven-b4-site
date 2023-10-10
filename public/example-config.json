@@ -1,0 +1,64 @@
+{
+	"$schema": "raven-config.schema.json",
+	"GalaxySky": {
+		"Value": false
+	},
+	"Reach": {
+		"Value": false,
+		"Range": 16
+	},
+	"HighJump": {
+		"Value": false,
+		"Jump": 500
+	},
+	"AutoBuy": {
+		"Value": true
+	},
+	"GetAllItems": {
+		"Value": false
+	},
+	"Speed": {
+		"Value": true,
+		"Speed": 150
+	},
+	"BedNuker": {
+		"Value": true,
+		"Range": 30
+	},
+	"AntiAdmin": {
+		"Value": false
+	},
+	"AutoToxic": {
+		"Value": false
+	},
+	"FOV": {
+		"Value": true,
+		"FOVValue": 120
+	},
+	"AdminNameTag": {
+		"Value": true
+	},
+	"AutoWin": {
+		"Value": true
+	},
+	"InfJump": {
+		"Value": false
+	},
+	"Atmosphere": {
+		"Value": false
+	},
+	"AutoWinBridge": {
+		"Value": false
+	},
+	"Killaura": {
+		"Value": true,
+		"Multiaura": true,
+		"Range": 20,
+		"CostumAnimations": true
+	},
+	"Fly": {
+		"Value": false,
+		"Down": 50,
+		"Up": 50
+	}
+}
