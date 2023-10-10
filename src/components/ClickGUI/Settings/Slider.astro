@@ -1,6 +1,4 @@
 ---
-import type { AnySetting } from "../../../utils/types/ClientInfo";
-
 interface Props {
 	name: string;
 	min: number;
@@ -27,45 +25,34 @@ value = value < min ? min : value;
 		<span class="setting-title">{name}</span>
 		<span class="slider-value">{value}</span>
 	</div>
-	<input
-		type="range"
-		class="display-slider"
-		min={min}
-		max={max}
-		step=""
-		value={value}
-		disabled
-	/>
-	<input
-		type="range"
-		class="input-slider"
-		min={min}
-		max={max}
-		step=""
-		value={value}
-	/>
+	<div class="container">
+		<input
+			type="range"
+			class="input-slider"
+			min={min}
+			max={max}
+			value={value}
+		/>
+
+		<progress class="input-progress" max={max}></progress>
+	</div>
 </div>
+
 <script>
-	function rainbow(delay: number): string {
-		const rainbowState = Math.ceil((Date.now() + delay) / 20.0) % 360;
-		const hue = rainbowState / 360.0;
-		return `hsl(${hue * 360}, 100%, 50%)`;
-	}
 	const sliders = document.querySelectorAll(".slider");
 	for (const slider of sliders) {
 		const inputSlider = slider.querySelector(
 			".input-slider"
 		)! as HTMLInputElement;
-		const displaySlider = slider.querySelector(
-			".display-slider"
-		)! as HTMLInputElement;
+		const progressBar = slider.querySelector(
+			".input-progress"
+		)! as HTMLProgressElement;
 		inputSlider.addEventListener("input", e => {
+			const input = e.target! as HTMLInputElement;
 			slider.querySelector(".slider-info-holder > .slider-value")!.textContent =
-				(e.target! as HTMLInputElement).value;
+				input.value;
+			progressBar.value = input.valueAsNumber - parseInt(input.min);
 		});
-		setInterval(() => {
-			displaySlider.style.background = rainbow(2);
-		}, 2);
 	}
 </script>
 <style>
@@ -83,43 +70,41 @@ value = value < min ? min : value;
 		overflow: hidden;
 		border-radius: 0;
 		outline: none;
-		width: 188px;
-		height: 20px;
-		position: absolute;
-	}
-
-	.input-slider::-moz-range-thumb {
+		position: relative;
+		z-index: 1;
 		opacity: 0;
 	}
 
-	.display-slider::-webkit-slider-runnable-track {
+	.input-slider::-moz-range-thumb,
+	.input-slider::-webkit-slider-runnable-track,
+	.input-slider::-webkit-slider-thumb {
+		appearance: none;
+		opacity: 0;
+	}
+	.input-progress::-moz-progress-bar,
+	.input-progress::-webkit-progress-bar {
+		background: var(--rainbow);
+	}
+	.input-progress {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		background: none;
+		/* background: #444; */
 	}
 
-	.display-slider::-webkit-slider-thumb {
-		-webkit-appearance: none;
-		width: 0;
-		height: 20px;
-		background: var(--clickgui-accent-color);
-		box-shadow: -100vw 0 0 100vw var(--clickgui-accent-color);
-	}
-
-	.display-slider {
-		margin: auto;
-		-webkit-appearance: none;
+	.container {
 		position: relative;
-		overflow: hidden;
-		height: 100%;
-		width: 100%;
-		border-radius: 0;
-		outline: none;
 	}
 
-	.display-slider::-webkit-slider-runnable-track {
-	}
-	.display-slider::-webkit-slider-thumb {
-		-webkit-appearance: none;
-		width: 0;
-		height: 20px;
-		box-shadow: -100vw 0 0 100vw;
+	.input-progress {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+		pointer-events: none;
 	}
 </style>

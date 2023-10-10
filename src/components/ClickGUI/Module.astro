@@ -18,12 +18,12 @@ const moduleId = `${name}-module`;
 		<span class="module-title">{name}</span>
 	</div>
 	<div class="module-contents">
+		<span class="module-description">{description}</span>
 		{
 			settings?.map(setting => {
 				switch (setting.type) {
 					case "toggle":
 						return <Toggle name={setting.name} state={setting.default} />;
-						break;
 					case "number-slider":
 						return (
 							<Slider
@@ -33,8 +33,8 @@ const moduleId = `${name}-module`;
 								defaultVal={setting.default}
 							/>
 						);
-						break;
 					default:
+						console.warn("Unknown seting type:", (setting as AnySetting).type);
 						break;
 				}
 			})

@@ -6,7 +6,7 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -31,6 +31,8 @@ const { title } = Astro.props;
 			var(--accent-light) 30%,
 			white 60%
 		);
+		/* rainbow color (gets changed at runtime) */
+		--rainbow: #444;
 	}
 	html {
 		font-family: system-ui, sans-serif;
@@ -38,14 +40,7 @@ const { title } = Astro.props;
 		background: #13151a;
 	}
 	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+		font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+			DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
 	}
 </style>
