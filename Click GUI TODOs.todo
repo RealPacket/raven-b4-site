@@ -1,5 +1,9 @@
-[1] show categories and modules in it.
-[2] add support for:
-    [2.1] number sliders
-    [2.2] toggles
-    [2.3] binds
+Part 1:
+[1 (DONE)] show categories and modules in it.
+[2 DONE] add support for:
+    [2.1 DONE] number sliders
+    [2.2 DONE] toggles
+    [2.3 DONE] binds
+
+Part 2:
+[1] Export & Import configs.

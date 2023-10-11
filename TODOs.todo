@@ -1,8 +1,7 @@
-[NOT DONE] TODO: add more background images (backgrounds/easy.gg/skywars.png, voxels/skywars.png)
+[97% done] TODO: add more background images (backgrounds/easy.gg/skywars.png, voxels/skywars.png)
 [NOT DONE] TODO: list raven features (& modules?)
-(OPTIONAL) TODO: simulate the ClickGUI with its modules,
-    (like on one of the Novoline client websites (intent or independent))
-    (also assuming that it's Novoline because I don't know lol)
+(DONE) TODO: simulate the ClickGUI with its modules,
+    (like on one of the Novoline client websites (intent))
     (also optional) and add extra options (so it's not only one game).
     raven b4 website will look way better than vape v4 website if this gets added lol
     (and then manthe or xylex will add this and one or the other one will paste it 🗿)

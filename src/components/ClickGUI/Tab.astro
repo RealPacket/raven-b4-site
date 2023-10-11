@@ -5,9 +5,12 @@ import Module from "../ClickGUI/Module.astro";
 interface Props {
 	name: string;
 	modules?: Map<string, IModule>;
+	draggable?: boolean;
 }
 
 const { name, modules } = Astro.props;
+let { draggable } = Astro.props;
+draggable = draggable ?? true;
 const tabId = `${name}-tab`;
 ---
 
@@ -31,13 +34,13 @@ const tabId = `${name}-tab`;
 <style>
 	.tab {
 		width: 200px;
-		border: 2px solid blue;
+		border: 2px solid var(--rainbow);
 		border-radius: 5px;
 		margin-right: 5px;
 		margin-bottom: 10px;
 	}
 	.tab[data-open="false"] > .tab-header > .tab-open-indicator {
-		color: green;
+		color: rgb(0, 255, 0);
 	}
 	.tab[data-open="false"] > .tab-content {
 		display: none;
@@ -69,7 +72,7 @@ const tabId = `${name}-tab`;
 		src: url("/fonts/GothamSSm-Book.ttf") format("truetype");
 	}
 	.tab-title {
-		font-size: 20px;
+		font-size: calc(30 * 0.75);
 		text-align: center;
 		margin-left: 8px;
 		color: rgb(255, 255, 255);
@@ -77,22 +80,40 @@ const tabId = `${name}-tab`;
 	}
 </style>
 <script>
-	const tabs = document.querySelectorAll("div.tab");
+	import draggify from "../../utils/draggify";
+	import isDescendantOf from "../../utils/descends";
+	const tabs = document.querySelectorAll(
+		"div.tab"
+	) as NodeListOf<HTMLDivElement>;
 	tabs.forEach(tab => {
-		tab.querySelector(".tab-header")!.addEventListener("click", () => {
-			handleClick(tab as HTMLDivElement);
+		// drag:
+		draggify(tab, e => {
+			return (
+				e.target == tab ||
+				e.target == tab.querySelector(".tab-header") ||
+				isDescendantOf(
+					e.target as HTMLElement,
+					tab.querySelector(".tab-header")!
+				) ||
+				e.target === document.body ||
+				e.target == document.documentElement
+			);
 		});
+		// expand/collapse:
+		tab
+			.querySelector(".tab-header")!
+			.querySelector(".tab-open-indicator")!
+			.addEventListener("click", () => {
+				handleClick(tab as HTMLDivElement);
+			});
 	});
 	const handleClick = (tab: HTMLDivElement) => {
 		const openIndicator = tab.querySelector(
 			".tab-open-indicator"
 		) as HTMLSpanElement;
-		const content = (tab.querySelector(".tab-content") as HTMLDivElement)!;
 		const currentState = JSON.parse(tab.dataset.open!);
 		const newState = !currentState;
 		openIndicator.textContent = newState ? "-" : "+";
 		tab.dataset.open = JSON.stringify(newState);
-		// openIndicator.style.color = newState ? "red" : "green";
-		// content.style.display = newState ? "" : "none";
 	};
 </script>

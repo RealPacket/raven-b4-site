@@ -13,12 +13,19 @@ const { name, description, settings } = Astro.props;
 const moduleId = `${name}-module`;
 ---
 
-<div id={moduleId} class="module" data-expanded="false" data-toggled="false">
+<div
+	id={moduleId}
+	class="module"
+	data-name={name}
+	data-expanded="false"
+	data-toggled="false"
+	data-bind="null"
+>
 	<div class="module-header">
 		<span class="module-title">{name}</span>
 	</div>
 	<div class="module-contents">
-		<span class="module-description">{description}</span>
+		{description ? <span class="module-description">{description}</span> : ""}
 		{
 			settings?.map(setting => {
 				switch (setting.type) {
@@ -39,6 +46,7 @@ const moduleId = `${name}-module`;
 				}
 			})
 		}
+		<span class="module-bind-text">BIND : NONE</span>
 	</div>
 </div>
 <script>
@@ -53,13 +61,11 @@ const moduleId = `${name}-module`;
 					module.dataset.toggled = JSON.stringify(
 						!JSON.parse(module.dataset.toggled!)
 					);
-					console.log("left click");
 					break;
 				case 2: // right click
 					module.dataset.expanded = JSON.stringify(
 						!JSON.parse(module.dataset.expanded!)
 					);
-					console.log("right click");
 					break;
 				default:
 					break;
@@ -69,6 +75,26 @@ const moduleId = `${name}-module`;
 			.querySelector(".module-header")!
 			.addEventListener("contextmenu", e => {
 				e.preventDefault(); // don't show the context menu for modules.
+			});
+		// binding
+		module
+			.querySelector(".module-contents")!
+			.querySelector(".module-bind-text")!
+			.addEventListener("click", e => {
+				const self = e.target! as HTMLSpanElement;
+				// show the user that we're going to process their next key input.
+				self.textContent = "BIND : ...";
+				document.addEventListener("keypress", handleKeyPress);
+				function handleKeyPress(e: KeyboardEvent) {
+					document.removeEventListener("keypress", handleKeyPress); // remove the listener.
+					if (module.dataset!.bind == e.key) {
+						module.dataset!.bind = "null"; // remove the key bind
+						self.textContent = "BIND : NONE";
+						return;
+					}
+					self.textContent = `BIND : ${e.key.toUpperCase()}`;
+					module.dataset!.bind = e.key.toLowerCase();
+				}
 			});
 	});
 </script>
@@ -86,5 +112,13 @@ const moduleId = `${name}-module`;
 	}
 	.module-title {
 		color: rgb(255, 255, 255);
+	}
+	.module-description {
+		color: rgb(255, 85, 0);
+	}
+	.module-bind-text {
+		color: var(--rainbow);
+		font-size: 15px;
+		font-family: "Gotham SSM Book";
 	}
 </style>

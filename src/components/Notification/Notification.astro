@@ -1,0 +1,48 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	// expireTime: number;
+}
+const { title, description } = Astro.props;
+---
+
+<div class="notification">
+	<div class="real-notification">
+		<span class="horizontal-notification-line"></span>
+		<div class="notification-content">
+			<p class="notification-title">{title}</p>
+			<span class="title-line"></span>
+			<p class="notification-description">{description}</p>
+		</div>
+	</div>
+</div>
+
+<style>
+	.notification-content > p {
+		color: white;
+	}
+	.title-line {
+		width: 240px;
+		height: 3px;
+		background: var(--rainbow);
+	}
+	.horizontal-notification-line {
+		width: 10px;
+		height: 12vh;
+		float: left;
+		background: var(--rainbow);
+	}
+	.notification {
+		float: right;
+		margin-top: 41vw;
+		border-top: 4px;
+		border-bottom: 4px;
+	}
+	.notification-content {
+		display: flex;
+		align-items: flex-end;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+</style>
