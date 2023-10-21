@@ -1,0 +1,117 @@
+---
+interface Props {
+	name: string;
+	min: number;
+	defaultVal?: number;
+	max: number;
+}
+
+const { name, min, defaultVal, max } = Astro.props;
+let value = defaultVal ?? min;
+// round it down if it's more than max.
+value = value > max ? value - max : value;
+// round it up if it's less than min.
+value = value < min ? min : value;
+---
+
+<div
+	class="setting slider"
+	id={`slider-setting-${name}`}
+	data-name={name}
+	data-value={value}
+>
+	<div class="slider-info-holder">
+		<span class="setting-title">{name}</span>
+		<span class="slider-value">{value}</span>
+	</div>
+	<div class="container">
+		<input
+			type="range"
+			class="input-slider"
+			min={min}
+			max={max}
+			value={value}
+		/>
+
+		<progress class="input-progress" max={max} value={value}></progress>
+	</div>
+</div>
+
+<script>
+	import ChangedEvent from "@ClickGUI/Events/ChangedEvent";
+
+	const sliders = document.querySelectorAll(
+		".slider"
+	) as NodeListOf<HTMLDivElement>;
+	for (const slider of sliders) {
+		const inputSlider = slider.querySelector(
+			".input-slider"
+		)! as HTMLInputElement;
+		const progressBar = slider.querySelector(
+			".input-progress"
+		)! as HTMLProgressElement;
+		inputSlider.addEventListener("input", e => {
+			const input = e.target! as HTMLInputElement;
+			const old = input.valueAsNumber;
+			slider.dispatchEvent(
+				new ChangedEvent<number>(slider, old, input.valueAsNumber)
+			);
+		});
+		//@ts-expect-error
+		slider.addEventListener(ChangedEvent.type, (e: ChangedEvent<number>) => {
+			const input = e.target!.querySelector(
+				".input-slider"
+			) as HTMLInputElement;
+			slider.querySelector(".slider-info-holder > .slider-value")!.textContent =
+				input.value;
+			slider.dataset.value = e.newValue.toString();
+			progressBar.value = input.valueAsNumber;
+		});
+	}
+</script>
+<style>
+	.slider-info-holder > span {
+		color: white;
+		font-size: 15px;
+		font-family: "Gotham SSm Book";
+	}
+	.slider-info-holder > .slider-value {
+		float: right;
+	}
+
+	.input-slider {
+		margin: auto;
+		appearance: none;
+		-webkit-appearance: none;
+		overflow: hidden;
+		border-radius: 0;
+		outline: none;
+		position: relative;
+		z-index: 1;
+		opacity: 0;
+	}
+
+	.input-slider::-moz-range-thumb,
+	.input-slider::-webkit-slider-runnable-track,
+	.input-slider::-webkit-slider-thumb {
+		appearance: none;
+		opacity: 0;
+	}
+	.input-progress::-moz-progress-bar,
+	.input-progress::-webkit-progress-bar {
+		background: var(--rainbow);
+	}
+	.input-progress {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 2;
+		pointer-events: none;
+		background: rgba(175, 175, 175, 0.6);
+	}
+
+	.container {
+		position: relative;
+	}
+</style>

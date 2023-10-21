@@ -8,6 +8,21 @@
       "ESNext",
       "ESNext.Array",
       "ESNext.Symbol"
-    ]
-  }
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": [
+        "./components/*"
+      ],
+      "@ClickGUI/*": [
+        "./components/ClickGUI/*"
+      ],
+      "@utils/*": [
+        "./utils/*"
+      ],
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

@@ -27,7 +27,7 @@ export default function draggify(
 	function dragStart(event: MouseEvent) {
 		dragging = true;
 		if (!dragging) return;
-		if (!canDrag(event)) return;
+		if (!canDrag(event)) return dragEnd();
 		// Get the mouse cursor position
 		mouseX = event.clientX;
 		mouseY = event.clientY;
@@ -45,7 +45,7 @@ export default function draggify(
 	// Function to drag the element
 	function drag(event: MouseEvent) {
 		if (!dragging) return;
-		if (!canDrag(event)) return;
+		// if (!canDrag(event)) return;
 		if (element.style.position === "static" || element.style.position === "")
 			element.style.position = "fixed";
 		// Get the new mouse cursor position
@@ -64,5 +64,6 @@ export default function draggify(
 	// Function to stop dragging the element
 	function dragEnd() {
 		dragging = false;
+		document.removeEventListener("mousemove", drag);
 	}
 }

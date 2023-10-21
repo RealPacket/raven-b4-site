@@ -2,8 +2,9 @@
 import type { IModule } from "../utils/types/ClientInfo";
 import Layout from "../layouts/Layout.astro";
 import ClientInfo from "../../public/client-info.json";
-import Tab from "../components/ClickGUI/Tab.astro";
-import Notification from "../components/Notification/Notification.astro";
+import Tab from "@components/ClickGUI/Old/Tab.astro";
+import Notification from "../components/Notification/New/Notification.astro";
+import ArraylistMod from "../components/ArrayList/ArraylistMod.astro";
 ---
 
 <Layout title="Raven B4 - Click GUI Demo" rainbow>
@@ -11,11 +12,15 @@ import Notification from "../components/Notification/Notification.astro";
 		<textarea id="config" placeholder="(Put your config here!)"></textarea>
 		<button id="import-config">import config</button>
 		<script>
-			import importConfig from "../utils/export.ts";
-			document.querySelector("#import-config").addEventListener("click", () => {
-				const config = document.querySelector("#config").value;
-				importConfig(config);
-			});
+			import importConfig from "@utils/export";
+			document
+				.querySelector("#import-config")!
+				.addEventListener("click", () => {
+					const config = (
+						document.querySelector("#config")! as HTMLTextAreaElement
+					).value;
+					importConfig(config);
+				});
 		</script>
 		<div id="clickgui">
 			{
@@ -29,11 +34,35 @@ import Notification from "../components/Notification/Notification.astro";
 					return <Tab name={tabName} modules={modules} />;
 				})
 			}
+			<script>
+				const modules = document.querySelectorAll(
+					".module"
+				) as NodeListOf<HTMLElement>;
+				const binds: { [bind: string]: HTMLElement } = {};
+				modules.forEach(mod => {
+					if (mod.dataset!.bind === "null") return;
+					binds[mod.dataset.bind!] = mod;
+				});
+				document.addEventListener("keypress", e => {
+					const mod = binds[e.key.toLowerCase()];
+					if (mod)
+						mod.dataset.toggled = JSON.stringify(
+							!JSON.parse(mod.dataset.toggled!)
+						);
+				});
+			</script>
 		</div>
 		<div id="target-info"></div>
-		<div id="array-list"></div>
+		<div id="array-list">
+			<ArraylistMod name="A" />
+			<ArraylistMod name="B" />
+			<ArraylistMod name="C" />
+			<ArraylistMod name="D" />
+			<ArraylistMod name="E" />
+		</div>
 		<div id="notification">
 			<Notification title="Test" description="Test" />
+			<span id="notification-line"></span>
 		</div>
 	</main>
 </Layout>
@@ -50,5 +79,29 @@ import Notification from "../components/Notification/Notification.astro";
 		align-items: center;
 		flex-direction: row;
 		align-items: flex-start;
+		/* filter: blur(25px); */
+	}
+	#array-list {
+		display: flex;
+		justify-content: right;
+		align-items: right;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+	#notification {
+		display: flex;
+		justify-content: right;
+		align-items: right;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+	span,
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	button {
+		color: #fff;
 	}
 </style>

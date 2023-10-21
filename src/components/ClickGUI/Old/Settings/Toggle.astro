@@ -1,0 +1,52 @@
+---
+interface Props {
+	name: string;
+	state?: boolean;
+}
+
+const { name, state } = Astro.props;
+---
+
+<div class="setting toggle" data-value="false" data-name={name}>
+	<!-- we'll change the color based on if it's toggled or not. -->
+	<span class="toggle-text">[{state ? "+" : "-"}] {name}</span>
+</div>
+<style>
+	.toggle[data-value="true"] > .toggle-text {
+		color: rgb(0, 255, 0);
+	}
+	.toggle[data-value="false"] > .toggle-text {
+		color: white;
+	}
+</style>
+<script>
+	import ChangedEvent from "@ClickGUI/Events/ChangedEvent";
+
+	const toggles = document.querySelectorAll(
+		".toggle"
+	) as NodeListOf<HTMLDivElement>;
+
+	toggles.forEach(toggle => {
+		toggle.addEventListener("click", () => {
+			const currentState = JSON.parse(toggle.dataset.value!);
+			const newState = !currentState;
+			toggle.dispatchEvent(
+				new ChangedEvent<boolean>(toggle, currentState, newState)
+			);
+			// toggleText.textContent = `[${newState ? "+" : "-"}] ${
+			// 	toggle.dataset.name
+			// }`;
+			// toggle.dataset.value = JSON.stringify(newState);
+		});
+		//@ts-expect-error
+		toggle.addEventListener(ChangedEvent.type, (e: ChangedEvent<boolean>) => {
+			const toggleText = e.target!.querySelector(
+				".toggle-text"
+			)! as HTMLSpanElement;
+			toggleText.textContent = `[${e.newValue ? "+" : "-"}] ${
+				toggle.dataset.name
+			}`;
+			toggle.dataset.value = JSON.stringify(e.newValue);
+		});
+	});
+</script>

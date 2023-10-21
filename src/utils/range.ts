@@ -13,4 +13,7 @@ export class Range implements IRange {
 	isInRange(number: number): boolean {
 		return number >= this.min && number <= this.max;
 	}
+	[Symbol.toStringTag]() {
+		return `Range (${this.min} to ${this.max})`;
+	}
 }

@@ -221,6 +221,7 @@
 					"type": "number-slider",
 					"name": "FOV",
 					"min": 0,
+					"default": 70,
 					"max": 120
 				}
 			]

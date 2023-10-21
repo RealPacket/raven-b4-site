@@ -1,5 +1,5 @@
 ---
-import type { AnySetting } from "../../utils/types/ClientInfo";
+import type { AnySetting } from "@utils/types/ClientInfo";
 import Slider from "./Settings/Slider.astro";
 import Toggle from "./Settings/Toggle.astro";
 
@@ -50,16 +50,28 @@ const moduleId = `${name}-module`;
 	</div>
 </div>
 <script>
+	import ModuleToggledEvent from "@ClickGUI/Events/ModuleToggleEvent";
+
 	const modules = document.querySelectorAll(
 		"div.module"
 	) as NodeListOf<HTMLDivElement>;
 	modules.forEach(module => {
+		///@ts-expect-error
+		module.addEventListener(
+			ModuleToggledEvent.type,
+			(e: ModuleToggledEvent) => {
+				console.log("toggle");
+				e.target!.dataset.toggled = JSON.stringify(e.newState);
+			}
+		);
 		const header = module.querySelector(".module-header")! as HTMLDivElement;
 		header.addEventListener("mouseup", ev => {
 			switch (ev.button) {
 				case 0: // left click
-					module.dataset.toggled = JSON.stringify(
-						!JSON.parse(module.dataset.toggled!)
+					const currentState = JSON.parse(module.dataset.toggled!);
+					const newState = !currentState;
+					module.dispatchEvent(
+						new ModuleToggledEvent(module, currentState, newState)
 					);
 					break;
 				case 2: // right click

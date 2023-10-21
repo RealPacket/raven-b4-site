@@ -1,5 +1,4 @@
 ---
-
 interface Props {
 	name: string;
 	state?: boolean;
@@ -21,6 +20,8 @@ const { name, state } = Astro.props;
 	}
 </style>
 <script>
+	import ChangedEvent from "@ClickGUI/Events/ChangedEvent";
+
 	const toggles = document.querySelectorAll(
 		".toggle"
 	) as NodeListOf<HTMLDivElement>;
@@ -29,13 +30,23 @@ const { name, state } = Astro.props;
 		toggle.addEventListener("click", () => {
 			const currentState = JSON.parse(toggle.dataset.value!);
 			const newState = !currentState;
-			const toggleText = toggle.querySelector(
+			toggle.dispatchEvent(
+				new ChangedEvent<boolean>(toggle, currentState, newState)
+			);
+			// toggleText.textContent = `[${newState ? "+" : "-"}] ${
+			// 	toggle.dataset.name
+			// }`;
+			// toggle.dataset.value = JSON.stringify(newState);
+		});
+		//@ts-expect-error
+		toggle.addEventListener(ChangedEvent.type, (e: ChangedEvent<boolean>) => {
+			const toggleText = e.target!.querySelector(
 				".toggle-text"
 			)! as HTMLSpanElement;
-			toggleText.textContent = `[${newState ? "+" : "-"}] ${
+			toggleText.textContent = `[${e.newValue ? "+" : "-"}] ${
 				toggle.dataset.name
 			}`;
-			toggle.dataset.value = JSON.stringify(newState);
+			toggle.dataset.value = JSON.stringify(e.newValue);
 		});
 	});
 </script>

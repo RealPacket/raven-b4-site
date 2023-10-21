@@ -7,9 +7,9 @@ export function rainbow(delay: number): string {
  * Creates a new interval using {@link setInterval}.
  * @returns {number} The interval registered. (for convenience)
  */
-export default function init(): number {
+export default function init(delay: number = 0): number {
 	// typescript being a faggot
 	return setInterval(() => {
-		document.documentElement.style.setProperty("--rainbow", rainbow(2));
-	}, 2) as unknown as number;
+		document.documentElement.style.setProperty("--rainbow", rainbow(delay));
+	}, 1) as unknown as number;
 }

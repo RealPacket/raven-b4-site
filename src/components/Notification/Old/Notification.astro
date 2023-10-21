@@ -8,13 +8,11 @@ const { title, description } = Astro.props;
 ---
 
 <div class="notification">
-	<div class="real-notification">
-		<span class="horizontal-notification-line"></span>
-		<div class="notification-content">
-			<p class="notification-title">{title}</p>
-			<span class="title-line"></span>
-			<p class="notification-description">{description}</p>
-		</div>
+	<span class="horizontal-notification-line"></span>
+	<div class="notification-content">
+		<p class="notification-title">{title}</p>
+		<span class="title-line"></span>
+		<p class="notification-description">{description}</p>
 	</div>
 </div>
 

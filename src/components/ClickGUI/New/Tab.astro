@@ -1,6 +1,6 @@
 ---
-import type { IModule } from "../../utils/types/ClientInfo";
-import Module from "../ClickGUI/Module.astro";
+import type { IModule } from "@utils/types/ClientInfo";
+import Module from "./Module.astro";
 
 interface Props {
 	name: string;
@@ -80,8 +80,8 @@ const tabId = `${name}-tab`;
 	}
 </style>
 <script>
-	import draggify from "../../utils/draggify";
-	import isDescendantOf from "../../utils/descends";
+	import draggify from "@utils/draggify";
+	import isDescendantOf from "@utils/descends";
 	const tabs = document.querySelectorAll(
 		"div.tab"
 	) as NodeListOf<HTMLDivElement>;

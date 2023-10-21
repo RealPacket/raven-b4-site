@@ -18,7 +18,7 @@ value = value < min ? min : value;
 	class="setting slider"
 	id={`slider-setting-${name}`}
 	data-name={name}
-	data-value={defaultVal}
+	data-value={value}
 >
 	<div class="slider-info-holder">
 		<span class="setting-title">{name}</span>
@@ -33,11 +33,13 @@ value = value < min ? min : value;
 			value={value}
 		/>
 
-		<progress class="input-progress" max={max}></progress>
+		<progress class="input-progress" max={max} value={value}></progress>
 	</div>
 </div>
 
 <script>
+	import ChangedEvent from "@ClickGUI/Events/ChangedEvent";
+
 	const sliders = document.querySelectorAll(
 		".slider"
 	) as NodeListOf<HTMLDivElement>;
@@ -50,9 +52,19 @@ value = value < min ? min : value;
 		)! as HTMLProgressElement;
 		inputSlider.addEventListener("input", e => {
 			const input = e.target! as HTMLInputElement;
+			const old = input.valueAsNumber;
+			slider.dispatchEvent(
+				new ChangedEvent<number>(slider, old, input.valueAsNumber)
+			);
+		});
+		//@ts-expect-error
+		slider.addEventListener(ChangedEvent.type, (e: ChangedEvent<number>) => {
+			const input = e.target!.querySelector(
+				".input-slider"
+			) as HTMLInputElement;
 			slider.querySelector(".slider-info-holder > .slider-value")!.textContent =
 				input.value;
-			slider.dataset.value = input.value;
+			slider.dataset.value = e.newValue.toString();
 			progressBar.value = input.valueAsNumber;
 		});
 	}

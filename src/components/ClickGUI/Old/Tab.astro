@@ -1,0 +1,118 @@
+---
+import type { IModule } from "@utils/types/ClientInfo";
+import Module from "./Module.astro";
+
+interface Props {
+	name: string;
+	modules?: Map<string, IModule>;
+	draggable?: boolean;
+}
+
+const { name, modules } = Astro.props;
+let { draggable } = Astro.props;
+draggable = draggable ?? true;
+const tabId = `${name}-tab`;
+---
+
+<div id={tabId} class="tab" data-open="false">
+	<div class="tab-header">
+		<span class="tab-title">{name}</span>
+		<span class="tab-open-indicator">+</span>
+	</div>
+	<div class="tab-content">
+		{
+			Array.from(modules || []).map(([name, mod]) => (
+				<Module
+					name={name}
+					description={mod.description}
+					settings={mod.settings}
+				/>
+			))
+		}
+	</div>
+</div>
+<style>
+	.tab {
+		width: 200px;
+		border: 2px solid var(--rainbow);
+		border-radius: 5px;
+		margin-right: 5px;
+		margin-bottom: 10px;
+	}
+	.tab[data-open="false"] > .tab-header > .tab-open-indicator {
+		color: rgb(0, 255, 0);
+	}
+	.tab[data-open="false"] > .tab-content {
+		display: none;
+	}
+	.tab[data-open="true"] > .tab-header > .tab-open-indicator {
+		color: red;
+	}
+	.tab-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 30px;
+	}
+	.module-header {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		transition: 0.25s ease-in-out;
+	}
+	.tab-open-indicator {
+		float: right;
+		margin-right: 5px;
+	}
+	@font-face {
+		font-family: "Gotham SSM Book";
+		src: url("/fonts/GothamSSm-Book.otf") format("opentype");
+		src: url("/fonts/GothamSSm-Book.ttf") format("truetype");
+	}
+	.tab-title {
+		font-size: calc(30 * 0.75);
+		text-align: center;
+		margin-left: 8px;
+		color: rgb(255, 255, 255);
+		font-family: "Gotham SSM Book";
+	}
+</style>
+<script>
+	import draggify from "@utils/draggify";
+	import isDescendantOf from "@utils/descends";
+	const tabs = document.querySelectorAll(
+		"div.tab"
+	) as NodeListOf<HTMLDivElement>;
+	tabs.forEach(tab => {
+		// drag:
+		draggify(tab, e => {
+			const tabHeader = tab.querySelector(".tab-header")!;
+			return (
+				e.target === tab ||
+				(e.target === tabHeader &&
+					(e.target as HTMLElement) !==
+						tabHeader.querySelector(".tab-open-indicator")) ||
+				e.target === document.body ||
+				e.target === document.documentElement
+			);
+		});
+		// expand/collapse:
+		tab
+			.querySelector(".tab-header")!
+			.querySelector(".tab-open-indicator")!
+			.addEventListener("click", () => {
+				handleClick(tab as HTMLDivElement);
+			});
+	});
+	const handleClick = (tab: HTMLDivElement) => {
+		const openIndicator = tab.querySelector(
+			".tab-open-indicator"
+		) as HTMLSpanElement;
+		const currentState = JSON.parse(tab.dataset.open!);
+		const newState = !currentState;
+		openIndicator.textContent = newState ? "-" : "+";
+		tab.dataset.open = JSON.stringify(newState);
+	};
+</script>
