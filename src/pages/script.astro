@@ -1,0 +1,37 @@
+---
+import Layout from "layouts/Layout.astro";
+---
+
+<Layout title="Raven B4">
+	<h1>Script</h1>
+	<p>Copy this into your executor:</p>
+	<div id="editor"></div>
+</Layout>
+<script is:inline type="module">
+	import * as monaco from "/node_modules/monaco-editor/min/vs/loader.js";
+	const editor = monaco.editor.create(document.getElementById("editor"), {
+		language: "lua",
+		theme: "vs-dark",
+		readOnly: true,
+	});
+	editor.setValue(
+		'loadstring(game:HttpGet("https://pastebin.com/raw/DzAdmNq1"))()'
+	);
+</script>
+<style>
+	html,
+	body {
+		background-color: #222222;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		font-family: Consolas, "Courier New", monospace;
+		color: white;
+	}
+	#editor {
+		width: 100%;
+		height: 100%;
+	}
+</style>

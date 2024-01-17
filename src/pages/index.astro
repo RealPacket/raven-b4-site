@@ -2,11 +2,16 @@
 import IndexLayout from "../layouts/IndexLayout.astro";
 import Card from "../components/Card.astro";
 import Raven from "/Raven.webp";
+import { BASE_PATH } from "../config/config";
+const SCRIPT_PAGE_PATH = `${BASE_PATH}script`;
+const FEATURES_PAGE_PATH = `${BASE_PATH}features`;
+const UI_PAGE_PATH = `${BASE_PATH}ui`;
+const DISCORD_INVITE = "https://discord.gg/SeanUAyd8f";
 ---
 
 <IndexLayout title="Raven B4">
 	<main>
-		<a class="container" href="/">
+		<a class="container" href={BASE_PATH}>
 			<!-- logo -->
 			<img src={Raven} alt="Raven B4 logo" loading="lazy" />
 		</a>
@@ -16,19 +21,19 @@ import Raven from "/Raven.webp";
 		</div>
 		<ul role="list" class="link-card-grid">
 			<!-- <Card title="card title" href="card href" body="card body"/> -->
-			<Card title="Get Script" body="Get the script!" />
+			<Card title="Get Script" body="Get the script!" href={SCRIPT_PAGE_PATH} />
 			<Card
 				title="Features"
-				href="/features"
+				href={FEATURES_PAGE_PATH}
 				body="Check out the features we have without (ever) leaving your browser!"
 			/>
 			<Card
 				title="UI demo"
-				href="/ui"
+				href={UI_PAGE_PATH}
 				body="See our UI without leaving your browser!"
 			/>
 			<Card
-				href="/discord"
+				href={DISCORD_INVITE}
 				title="Community"
 				body="Join our discord and chat with others!"
 			/>

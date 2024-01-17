@@ -1,10 +1,12 @@
 ---
+import { BASE_PATH } from "config/config";
 interface Props {
 	title: string;
 	rainbow?: boolean;
 }
 
 const { title, rainbow } = Astro.props;
+const scriptCode = `import init from "${BASE_PATH}utils/rainbow.mjs"\ninit();`;
 ---
 
 <!DOCTYPE html>
@@ -16,15 +18,7 @@ const { title, rainbow } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/Raven.webp" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		{
-			rainbow ? (
-				<script type="module">
-					import init from "/utils/rainbow.mjs"; init()
-				</script>
-			) : (
-				""
-			)
-		}
+		{rainbow ? <script type="module" set:html={scriptCode} /> : ""}
 	</head>
 	<body>
 		<slot />
